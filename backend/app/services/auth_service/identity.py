@@ -1,4 +1,3 @@
-# app/services/identity.py
 import uuid
 from datetime import datetime, timezone
 from typing import List, Optional, Tuple
@@ -21,7 +20,6 @@ from app.schemas.identity import (
 )
 
 
-# ---------- Organization ----------
 def create_organization(session: Session, org_in: OrganizationCreate) -> Organization:
     db_org = Organization.model_validate(org_in)
     session.add(db_org)
@@ -60,7 +58,6 @@ def list_organizations(session: Session, skip: int = 0, limit: int = 100) -> Lis
     return session.exec(select(Organization).offset(skip).limit(limit)).all()
 
 
-# ---------- User ----------
 def create_user(session: Session, user_in: UserCreate) -> User:
     db_user = User.model_validate(
         user_in,
@@ -108,7 +105,6 @@ def list_users(session: Session, org_id: Optional[uuid.UUID] = None, skip: int =
     return session.exec(stmt.offset(skip).limit(limit)).all()
 
 
-# ---------- AuthIdentity ----------
 def create_auth_identity(session: Session, identity_in: AuthIdentityCreate) -> AuthIdentity:
     db_ident = AuthIdentity.model_validate(identity_in)
     session.add(db_ident)
@@ -130,7 +126,6 @@ def delete_auth_identity(session: Session, identity_id: uuid.UUID) -> bool:
     return True
 
 
-# ---------- UserDevice ----------
 def create_user_device(session: Session, device_in: UserDeviceCreate) -> UserDevice:
     db_dev = UserDevice.model_validate(device_in)
     session.add(db_dev)
@@ -160,7 +155,6 @@ def delete_user_device(session: Session, device_id: uuid.UUID) -> bool:
     return True
 
 
-# ---------- APIKey ----------
 def generate_api_key_prefix() -> str:
     import secrets
     return f"cs_live_{secrets.token_hex(6)[:6]}"
@@ -277,7 +271,6 @@ def list_permissions(session: Session, skip: int = 0, limit: int = 100) -> List[
     return session.exec(select(Permission).offset(skip).limit(limit)).all()
 
 
-# ---------- RolePermission ----------
 def assign_permission_to_role(session: Session, rp_in: RolePermissionCreate) -> RolePermission:
     db_rp = RolePermission.model_validate(rp_in)
     session.add(db_rp)
@@ -303,7 +296,6 @@ def get_permissions_for_role(session: Session, role: UserRole) -> List[Permissio
     return session.exec(stmt).all()
 
 
-# ---------- AuditLog ----------
 def create_audit_log(session: Session, log_in: AuditLogCreate) -> AuditLog:
     db_log = AuditLog.model_validate(log_in)
     session.add(db_log)

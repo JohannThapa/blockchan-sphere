@@ -83,6 +83,8 @@ def init_db(session: Session) -> None:
         ("role_permission.remove", "Remove permission from role"),
         ("audit_log.create", "Create audit log"),
         ("audit_log.list", "List audit logs"),
+        ("address.label", "Label a blockchain address"),
+        ("chain.sync", "Trigger on-demand chain sync"),
     ]
 
     for code, desc in default_perms:

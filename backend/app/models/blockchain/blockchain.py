@@ -1,9 +1,9 @@
 import enum
 import uuid
 from datetime import datetime
-from sqlalchemy import BigInteger, Boolean, Enum, ForeignKey, Index, Integer, Numeric, String, DateTime
-from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import BigInteger, Boolean, Enum, ForeignKey, Index, Integer, Numeric, String, DateTime  # pyright: ignore[reportMissingImports]
+from sqlalchemy.dialects.postgresql import UUID  # pyright: ignore[reportMissingImports]
+from sqlalchemy.orm import Mapped, mapped_column, relationship  # pyright: ignore[reportMissingImports]
 from app.models.base import Base, TimestampMixin, UUIDMixin
 
 
