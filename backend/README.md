@@ -163,6 +163,50 @@ $ alembic upgrade head
 
 If you don't want to start with the default models and want to remove them / modify them, from the beginning, without having any previous revision, you can remove the revision files (`.py` Python files) under `./backend/app/alembic/versions/`. And then create a first migration as described above.
 
+## Seeding the Database
+
+For development and testing purposes, you can populate the database with realistic mock data using the built-in seed scripts located in `./backend/app/seeds/`.
+
+The seed scripts are idempotent – they check for existing records before inserting, so you can run them multiple times without creating duplicates.
+
+To run the seed orchestrator, which executes all seed modules in the correct dependency order:
+
+```bash
+# From the ./backend/ directory (activate the virtual environment first)
+uv run python app/seeds/__init__.py
+```
+
+Alternatively, if you have created a `__main__.py` inside `app/seeds/`, you can use:
+
+```bash
+uv run python -m app.seeds
+```
+
+You can also run individual seed files directly, for example:
+
+```bash
+uv run python app/seeds/seed_cores.py
+```
+
+**Important:** The seed scripts assume that the database tables already exist. Make sure you have run the migrations (`alembic upgrade head`) before seeding. If you are using Docker, you can run the seed commands from inside the backend container:
+
+```bash
+docker compose exec backend bash
+# inside the container
+uv run python app/seeds/__init__.py
+```
+
+The seed data includes:
+
+- Blockchain networks (Ethereum, Polygon, Arbitrum, Solana, Bitcoin)
+- AI models
+- Organizations and users with roles
+- Auth identities, devices, API keys, audit logs, and KYC records
+- Wallets (hot, cold, multisig, hardware, smart, HD)
+- Addresses, blocks, and transactions
+- Smart contracts, contract events, upgrades, and rug‑pull predictions
+- Tokens (native, ERC‑20, SPL) with balances, transfers, vesting schedules, and airdrops
+
 ## Email Templates
 
 The email templates are in `./backend/app/email-templates/`. Here, there are two directories: `build` and `src`. The `src` directory contains the source files that are used to build the final email templates. The `build` directory contains the final email templates that are used by the application.
